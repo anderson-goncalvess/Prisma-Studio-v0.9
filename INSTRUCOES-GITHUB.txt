@@ -1,0 +1,22 @@
+PRISMA STUDIO v0.9 — ATUALIZACAO DO GITHUB PAGES
+
+Publique estes arquivos NO MESMO DIRETORIO de publicacao do seu GitHub Pages:
+  index.html
+  mesa-dtf.html
+  removedor-de-borda.html
+
+Se o GitHub Pages publica a branch main, pasta /(root), envie-os na raiz.
+Se publica /docs, envie-os na pasta docs.
+
+PASSOS RAPIDOS
+1. Acesse seu repositorio GitHub e a branch usada pelo Pages.
+2. Abra a pasta publicada (raiz ou docs).
+3. Add file > Upload files.
+4. Arraste os tres HTML descompactados e faca Commit changes.
+5. Confirme em Settings > Pages e abra seu mesmo endereco.
+
+NAO enviar somente este ZIP ao repositorio: o GitHub Pages nao o descompacta.
+NAO criar uma pasta aninhada extra para os tres HTML.
+A Mesa DTF depende do caminho relativo ./mesa-dtf.html.
+
+Se o repositorio tiver arquivos adicionais de trabalho, mantenha-os; substitua apenas os arquivos correspondentes.

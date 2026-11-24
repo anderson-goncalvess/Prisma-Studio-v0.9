@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a1120">
+<meta name="prisma-module" content="removedor-de-borda-v0.5">
+<title>Prisma Studio — Removedor de Borda v0.5</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1120;--panel:#111b2c;--panel2:#152238;--line:#26394e;--ink:#eff7ff;--sub:#9aacc1;--muted:#718aa5;--accent:#45dfc7;--yellow:#e8ee37;--danger:#ff7582}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}body{overflow:hidden}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.hidden{display:none!important}
+.app{height:100dvh;display:flex;flex-direction:column;gap:0;min-height:0}.heading{height:67px;min-height:67px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 25px;border-bottom:1px solid var(--line);background:#0c1626}.title-block{display:flex;align-items:center;gap:12px}.title-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;color:#06302d;background:var(--accent);font-weight:950;font-size:23px}.hsmall{font-size:10px;color:var(--accent);font-weight:850;letter-spacing:1.5px;text-transform:uppercase}.title-block h1{margin:4px 0 0;font-size:21px;letter-spacing:-.6px}.heading-note{border:1px solid #29504f;background:#102a30;border-radius:999px;color:#83ead7;padding:7px 12px;font-size:11px;white-space:nowrap}
+.layout{display:grid;grid-template-columns:355px minmax(0,1fr);gap:12px;padding:13px 16px 8px;flex:1;min-height:0}.panel{background:#111b2b;border:1px solid var(--line);border-radius:14px;min-height:0;display:flex;flex-direction:column;overflow:hidden}.panelheader{font-size:11px;font-weight:900;letter-spacing:.65px;color:#c9d9eb;border-bottom:1px solid #243549;min-height:42px;padding:14px 15px}.configscroll{padding:14px 14px 20px;flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#3e5167 #0d1627}.label{font-size:10px;color:#b5cae0;font-weight:800;letter-spacing:.4px;display:flex;justify-content:space-between;gap:9px;align-items:center;margin:0 0 8px}.muted{color:var(--muted)}.upload{border:1px dashed #438b80;background:#11332e;border-radius:10px;min-height:112px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;padding:13px;text-align:center;cursor:pointer}.upload:hover,.upload.dragging{border-color:#8ef6e3;background:#173d38}.upload .upico{font-size:32px;line-height:1;color:#77f0d9}.upload strong{color:#83f1d9;font-size:12px}.upload span{color:#88a5ad;font-size:10px}.fileinfo{font-size:11px;color:#9ac3c1;margin-top:7px;word-break:break-word;line-height:1.45}.section{margin:15px 0 0;padding-top:12px;border-top:1px solid #24364a}.section.first{border:0;padding-top:0;margin-top:16px}.presets{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}.preset{border:1px solid #34475d;background:#1b2a3e;border-radius:7px;padding:9px 3px;font-weight:800;font-size:11px;text-align:center}.preset.active{background:var(--accent);color:#052827;border-color:var(--accent)}.rangegroup{display:flex;gap:10px;align-items:center;margin-top:10px}.rangegroup input{flex:1;min-width:0}.rangeval{border:1px solid #35655f;background:#162b33;min-width:46px;text-align:center;border-radius:7px;padding:9px 6px;font-weight:850;color:var(--accent);font-size:11px}input[type=range]{accent-color:var(--accent);cursor:pointer;width:100%}.rowcontrol{display:flex;align-items:center;gap:10px;margin:12px 0}.rowcontrol label{font-size:11px;color:#c4d6e6;flex:1;line-height:1.35}.rowcontrol select{font-size:11px;max-width:145px;border:1px solid #35485c;background:#18283d;color:#edf7ff;border-radius:7px;padding:9px 8px}.value{color:var(--accent);font-size:11px;font-weight:900}.checkrow{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:#d0dde9;line-height:1.45;margin:11px 0}.checkrow input{margin:1px 0 0;accent-color:var(--accent)}.subtext{font-size:10px;color:#839db6;line-height:1.6;margin:10px 0}.actionarea{padding:12px;background:#101a2b;border-top:1px solid #26384d;display:grid;gap:8px}.actionbuttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:1px solid #33485c;background:#1e2d42;border-radius:8px;padding:11px 12px;font-size:11px;font-weight:850;white-space:nowrap}.btn:hover:not(:disabled){border-color:#68baa8}.btn.primary{background:var(--accent);border-color:var(--accent);color:#052c2b}.btn.secondary{background:#152a33;color:#81e4d4}.btn.full{width:100%}.smallstat{font-size:10px;color:#94a7bb;line-height:1.6}.smallstat b{color:#e2f7f4}
+.previewpanel{min-width:0}.pcontrols{padding:12px 13px 9px;display:flex;flex-direction:column;gap:9px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.viewmode{background:#182539;color:#b5c8d7;border:1px solid #2c4157;border-radius:8px;padding:10px;font-size:11px;font-weight:850}.viewmode.active{background:#183930;border-color:#348a77;color:#82f3df}.optbar{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.choice{border:1px solid #2a4055;background:#172439;border-radius:7px;padding:7px 9px;font-weight:800;font-size:10px}.choice.active{background:#173831;border-color:#32816f;color:#8bebdb}.separator{flex:1;min-width:10px}.zoom{background:#17263b;border:1px solid #2d4359;border-radius:7px;padding:7px 9px;font-weight:900;font-size:11px;min-width:35px}.zoomvalue{background:#102d2c;color:#8af2d9;border:1px solid #2a665d;border-radius:7px;padding:7px 9px;min-width:55px;text-align:center;font-size:11px;font-weight:850}.coloroptions{display:inline-flex;gap:5px;align-items:center}.coloroptions input[type=color]{width:28px;height:28px;padding:2px;background:transparent;border:1px solid #345369;border-radius:6px;cursor:pointer}.preview-area{margin:0 13px 12px;border-radius:11px;flex:1;min-height:100px;position:relative;overflow:auto;display:flex;background-color:#1b2332;background-image:linear-gradient(45deg,#253044 25%,transparent 25%),linear-gradient(-45deg,#253044 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#253044 75%),linear-gradient(-45deg,transparent 75%,#253044 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0}.preview-area.solid{background-image:none}.stage{display:flex;min-width:100%;min-height:100%;flex:1;align-items:center;justify-content:center}.artboard{position:relative;flex:none;box-shadow:0 5px 30px #0007}.artboard canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:auto}.compare-divider{position:absolute;top:0;bottom:0;width:2px;background:#c9fff2;z-index:3;box-shadow:0 0 8px #071a24}.compare-divider:after{content:'↔';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;display:grid;place-items:center;border-radius:100%;background:var(--accent);color:#07302d;font-size:16px;font-weight:900}.empty{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:10px;color:#74869d;pointer-events:none}.empty-icon{font-size:39px;opacity:.5}.empty strong{color:#acbdce;font-size:13px}.empty span{font-size:11px}.compare-foot{display:none;align-items:center;gap:9px;padding:0 14px 10px;color:#a2b9ca;font-size:10px}.compare-foot.visible{display:flex}.compare-foot input{flex:1}.footbar{background:#101a29;border-top:1px solid var(--line);padding:9px 17px;display:flex;gap:14px;justify-content:space-between;align-items:center;font-size:10px;color:#89a7ba}.footbar b{color:#cce8e3}.toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,120px);background:#1b3b43;color:#ddfff7;padding:12px 17px;border:1px solid #48a79d;border-radius:8px;box-shadow:0 8px 30px #0009;z-index:20;transition:transform .2s;font-size:12px;max-width:90vw}.toast.show{transform:translate(-50%,0)}.progress{height:2px;background:#122338;position:absolute;left:0;right:0;bottom:0}.progress>div{height:100%;width:0;background:var(--accent);transition:width .15s}.resultnotice{display:none;color:#a4e4d7;font-size:10px;padding:7px 9px;border:1px solid #32645e;background:#142e31;border-radius:7px;line-height:1.45}.resultnotice.visible{display:block}.diffmeta{display:flex;justify-content:space-between;font-size:10px;gap:7px;color:#879eb3;padding-top:2px}
+@media(max-width:920px){body{overflow:auto}.app{height:auto;min-height:100dvh}.layout{display:flex;flex-direction:column;min-height:900px}.panel{overflow:visible}.configscroll{overflow:visible}.previewpanel{min-height:560px}.preview-area{min-height:420px}.footbar{flex-wrap:wrap}.heading-note{display:none}}@media(max-width:500px){.heading{padding:0 12px}.title-block h1{font-size:17px}.layout{padding:8px}.presets{grid-template-columns:repeat(3,1fr)}.optbar{gap:4px}}
+
+/* Prisma Studio Removedor v0.3: layout de configuração à esquerda e canvas com barra fixa. */
+.layout{grid-template-columns:minmax(310px,370px) minmax(0,1fr);gap:11px;padding:12px 14px 9px}
+.previewpanel{display:flex;flex-direction:column;position:relative;min-height:0}
+.pcontrols{flex:0 0 auto}
+.preview-area{min-height:0;flex:1;position:relative;overscroll-behavior:contain;scrollbar-color:#425c72 transparent;cursor:default;scroll-behavior:auto}
+.preview-area.drag-pan{cursor:grabbing}
+.preview-area .stage{flex:0 0 auto;width:max-content;min-width:100%;height:max-content;min-height:100%;align-items:center;justify-content:center}
+.preview-area .artboard{box-shadow:none;isolation:isolate;touch-action:none}
+.preview-area canvas{pointer-events:none}
+.preview-area .empty{inset:0}
+
+
+
+
+
+
+
+
+
+
+.view-help{font-size:10px;color:#8399ae;margin-left:auto}
+.previewpanel:fullscreen{background:#0a1120;padding:12px}
+.previewpanel:fullscreen .preview-area{min-height:0}
+.preview-area{margin-bottom:30px}
+.compare-foot{position:absolute;left:13px;right:13px;bottom:74px;z-index:9;border:1px solid #304961;background:#101c2dec;border-radius:9px;padding:7px 12px}
+.file-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:9px}
+.file-chip{display:flex;align-items:center;justify-content:center;padding:7px 6px;font-size:10px;line-height:1.3;color:#b0e5db;background:#182a3a;border:1px solid #294258;border-radius:99px;text-align:center;font-weight:700}
+.file-chip:last-child{grid-column:1/-1;width:49%}
+.upload .upload-copy{display:flex;flex-direction:column;gap:5px;max-width:100%;min-width:0}.upload.loaded{flex-direction:row;text-align:left;gap:13px;align-items:center;justify-content:flex-start;min-height:82px}.upload.loaded .upload-copy{align-items:flex-start;min-width:0;flex:1}.upload:not(.loaded) .upload-copy{align-items:center}
+.upload.loaded .upico{font-size:28px}
+.upload.loaded strong{display:block;word-break:break-word}
+.upload.loaded span:not(.upico){display:block}
+.upload-size{font-size:10px;color:#8eb5bf}
+@media(max-width:920px){.layout{display:flex;flex-direction:column}.previewpanel{min-height:600px}.preview-area{min-height:400px}}
+@media(max-width:600px){.file-chip{font-size:9px}.view-help{display:none}}
+
+/* v0.3: zoom no cabeçalho da pré-visualização; não sobrepõe a imagem. */
+.optbar{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.toolbarZoom{margin-left:auto;display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:none;border:0;padding:0;position:static;transform:none;box-shadow:none;backdrop-filter:none}
+.toolbarZoom button{border:1px solid #2d4359;background:#17263b;border-radius:7px;color:#dcebf3;font-size:11px;font-weight:800;padding:7px 8px;min-height:30px;min-width:30px}
+.toolbarZoom button:hover{border-color:#68baa8;background:#213348}
+.toolbarZoom .zoomvalue{background:#102d2c;color:#8af2d9;border:1px solid #2a665d;border-radius:7px;padding:7px 8px;min-width:50px;text-align:center;font-size:11px;font-weight:850}
+.toolbarZoom .vsep{height:23px;width:1px;background:#34465c;margin:0 2px}
+.toolbarZoom .swatch{height:24px;width:24px;min-width:24px;border:2px solid #52687c;border-radius:50%;padding:0;cursor:pointer}
+.toolbarZoom .swatch.selected{outline:2px solid #4cdacb;outline-offset:1px}
+.toolbarZoom #bgCheck{background:repeating-conic-gradient(#adb7c1 0% 25%,#697782 0 50%) 50%/9px 9px;color:#0000}
+.toolbarZoom #bgWhite{background:#fff}.toolbarZoom #bgBlack{background:#080b0f}
+.previewpanel{position:relative}.preview-area{margin-bottom:12px}
+@media(max-width:860px){.toolbarZoom{width:100%;justify-content:flex-end;margin-left:0}}
+/* Removedor v0.4: controles únicos acima do canvas, igual ao print de referência. */
+.previewpanel .pcontrols{padding:12px 13px 8px;gap:10px}
+.previewpanel .optbar{display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0}
+.previewpanel .optbar .choice{white-space:nowrap;min-height:30px}
+.previewpanel .toolbarZoom{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;justify-content:flex-end;position:static;padding:0;border:0;box-shadow:none;background:transparent;transform:none}
+.previewpanel .toolbarZoom button{font-size:12px;min-width:28px;height:29px;padding:3px 7px;background:#242630;border:1px solid #383e4a;border-radius:7px;color:#c5cad6}
+.previewpanel .toolbarZoom #fitBtn{min-width:29px;font-size:16px}
+.previewpanel .toolbarZoom button:hover{background:#303844;border-color:#5b707b;color:#fff}
+.previewpanel .toolbarZoom .zoomvalue{color:#eaff4c;background:#313524;border:1px solid #59612e;font-size:11px;font-weight:850;padding:6px 8px;min-width:43px;white-space:nowrap}
+.previewpanel .diffmeta{padding:0 14px 10px;font-size:10px;color:#869cae}
+.preview-area{margin-bottom:8px}
+@media(max-width:560px){.previewpanel .optbar{gap:4px}.previewpanel .optbar .choice{padding:6px 5px;font-size:9px}.previewpanel .toolbarZoom{gap:3px}.previewpanel .toolbarZoom button{min-width:25px;padding:3px 5px}}
+
+/* Exportação PNG: link explícito e imagem real como alternativa a downloads bloqueados no visualizador */
+
+/* Removedor v0.5 — alertas discretos para recortes agressivos */
+.safetymsg{font-size:10px;color:#f4dea2;background:#392b1c;border:1px solid #775735;border-radius:7px;line-height:1.5;padding:9px 10px;margin:8px 0}.safetymsg.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="heading"><div class="title-block"><div class="title-icon">◈</div><div><div class="hsmall">PRISMA STUDIO • FERRAMENTA 02</div><h1>Removedor de Borda <span style="color:var(--accent)">PRO 0.5</span></h1></div></div><span class="heading-note">● Processamento local · Sem upload</span></header>
+<main class="layout">
+<section class="panel" aria-label="Configuração"><div class="panelheader">CONFIGURAÇÃO</div><div class="configscroll">
+<div class="label">IMAGEM <span class="muted" style="font-weight:500">PNG recomendado</span></div>
+<div id="upload" class="upload" role="button" tabindex="0"><span class="upico">⇧</span><div class="upload-copy"><strong id="uploadTitle">Clique para enviar</strong><span id="uploadSubtitle">Arraste, clique ou cole com Ctrl+V</span><span id="uploadSize" class="upload-size hidden"></span></div></div>
+<div id="fileInfo" class="fileinfo hidden" aria-live="polite"><div class="file-stats"><span class="file-chip" id="fileDimensions">—</span><span class="file-chip" id="filePhysical">—</span><span class="file-chip" id="fileWeight">—</span></div></div>
+<div class="section first"><div class="label">PIXELS A CONTRAIR <span class="muted" style="font-weight:500">contorno da arte</span></div><div class="presets" id="presets"><button class="preset active" data-v="1">1 px</button><button class="preset" data-v="2">2 px</button><button class="preset" data-v="3">3 px</button><button class="preset" data-v="5">5 px</button><button class="preset" data-v="8">8 px</button><button class="preset" data-v="10">10 px</button></div><div class="rangegroup"><input id="shrink" type="range" min="0" max="20" value="1" step="1" aria-label="Pixels a contrair"><span id="shrinkVal" class="rangeval">1 px</span></div></div>
+<div class="section"><div class="rowcontrol"><label for="threshold">Limiar semitransparência</label><span id="thresholdVal" class="value">127</span></div><input id="threshold" type="range" min="0" max="254" value="127"><div class="rowcontrol"><label for="smooth">Suavizar contorno</label><select id="smooth"><option value="0">Desligado</option><option value="1">Leve</option><option value="2" selected>Médio</option><option value="3">Forte</option></select></div><div class="rowcontrol"><label for="fringe">Limpar cor da franja</label><select id="fringe"><option value="0">Desligado</option><option value="1" selected>1 px</option><option value="2">2 px</option><option value="3">3 px</option><option value="5">5 px</option></select></div>
+<label class="checkrow"><input id="holes" type="checkbox" checked> Contrair também furos internos (miolo de letras)</label>
+<label class="checkrow"><input id="border" type="checkbox"> Borda da imagem conta como fundo</label>
+<label class="checkrow"><input id="thin" type="checkbox" checked> Proteger detalhes e linhas finas</label>
+<p class="subtext">Contração da máscara alfa com proteção opcional dos traços estreitos. A limpeza de franja busca cores internas mais profundas para reduzir o halo branco sem modificar todo o desenho.</p><div id="safetyWarning" class="safetymsg hidden" role="status"></div><div id="resultNotice" class="resultnotice" role="status"></div></div>
+</div><div class="actionarea"><button id="processBtn" class="btn primary full" disabled>⚡ PROCESSAR IMAGEM</button><div class="actionbuttons"><button id="downloadBtn" class="btn secondary" disabled>↓ Baixar PNG</button><button id="restoreBtn" class="btn" disabled>↶ Restaurar</button></div><div class="smallstat" id="stats">Nenhuma imagem carregada.</div></div>
+</section>
+<section class="panel previewpanel" aria-label="Pré-visualização"><div class="panelheader">PRÉ-VISUALIZAÇÃO</div><div class="pcontrols"><div class="tabs"><button id="normalMode" class="viewmode active">▧ Normal</button><button id="compareMode" class="viewmode" disabled>↔ Antes / Depois</button></div>
+<div class="optbar"><button class="choice active" id="transparentBtn" aria-pressed="true">◉ Transparente</button><button class="choice" id="colorBtn" aria-pressed="false">□ Cor de Fundo</button><input id="bgColor" class="hidden" aria-label="Selecionar cor do fundo" type="color" value="#212d40"><div class="toolbarZoom" id="zoomToolbar" aria-label="Zoom da imagem"><button id="zoomOut" type="button" title="Diminuir zoom" aria-label="Diminuir zoom">−</button><span id="zoomValue" class="zoomvalue">100%</span><button id="zoomIn" type="button" title="Aumentar zoom" aria-label="Aumentar zoom">+</button><button id="fitBtn" type="button" title="Encaixar imagem na área de visualização" aria-label="Encaixar imagem">⛶</button></div></div></div>
+<div class="preview-area" id="preview"><div class="stage" id="stage"><div class="artboard hidden" id="artboard"><canvas id="beforeCanvas"></canvas><canvas id="afterCanvas"></canvas><div id="divider" class="compare-divider hidden"></div></div></div><div class="empty" id="empty"><div class="empty-icon">▧</div><strong>Envie uma imagem para começar</strong><span>Prévia no fundo transparente ou em tecido sólido</span></div></div>
+
+<div class="diffmeta"><span id="previewDesc">Envie uma imagem PNG para começar</span><span id="dimensions">—</span></div>
+<div id="compareFoot" class="compare-foot"><span>Antes</span><input id="compareSlider" type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois"><span>Depois</span></div>
+<div class="progress"><div id="progressFill"></div></div></section>
+</main><div class="footbar"><span>✦ Dica: escolha a contração, processe e confira no comparador <b>Antes / Depois</b>.</span><span id="footStatus">Nenhum arquivo é enviado a servidores.</span></div></div>
+<input type="file" id="fileInput" accept=".png,image/png" class="hidden"><div id="toast" class="toast" role="status"></div>
+
+<script id="workerCode" type="text/plain">
+let source=null,W=0,H=0;
+function send(type,data={},transfer=[]){postMessage({type,...data},transfer)}
+function connectedOutside(mask){
+ const n=mask.length,seen=new Uint8Array(n),queue=new Int32Array(n);let head=0,tail=0;
+ const seed=p=>{if(!mask[p]&&!seen[p]){seen[p]=1;queue[tail++]=p}};
+ for(let x=0;x<W;x++){seed(x);seed((H-1)*W+x)}
+ for(let y=0;y<H;y++){seed(y*W);seed(y*W+W-1)}
+ while(head<tail){const p=queue[head++],x=p%W,y=(p/W)|0;
+  if(x>0)seed(p-1);if(x<W-1)seed(p+1);if(y>0)seed(p-W);if(y<H-1)seed(p+W);
+ }
+ return seen;
+}
+function measureThin(mask,p,cut){
+ // Measure the local width of a foreground stroke along both axes. Detect
+ // a narrow central spine instead of erasing the entire detail.
+ const spanLimit=2*cut+4,x=p%W,y=(p/W)|0;
+ let l=0,r=0,u=0,d=0;
+ while(l<spanLimit&&x>l&&mask[p-l-1])l++;
+ while(r<spanLimit&&x+r+1<W&&mask[p+r+1])r++;
+ while(u<spanLimit&&y>u&&mask[p-(u+1)*W])u++;
+ while(d<spanLimit&&y+d+1<H&&mask[p+(d+1)*W])d++;
+ const hs=l+r+1,vs=u+d+1;
+ const minSpan=Math.min(hs,vs);
+ if(minSpan>2*cut+2)return false;
+ // Keep center pixels only; preserve a one-pixel line as well.
+ const centerH=Math.abs(l-r)<=1,centerV=Math.abs(u-d)<=1;
+ return (hs<=2*cut+2&&centerH)||(vs<=2*cut+2&&centerV);
+}
+const DIRS=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1],[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]];
+function process(config){
+ if(!source)throw Error('Nenhuma imagem carregada');
+ const n=W*H,cut=config.shrink|0,limit=+config.threshold,fringe=+config.fringe,smooth=+config.smooth;
+ const protectFine=config.thin!==false;
+ send('progress',{percent:6,message:'Mapeando alfa e regiões transparentes...'});
+ const mask=new Uint8Array(n);let initialSolid=0;
+ for(let p=0;p<n;p++){const a=source[p*4+3];mask[p]=a>limit?1:0;initialSolid+=mask[p]}
+ let outside=null;
+ if(!config.holes)outside=connectedOutside(mask);
+ const INF=32760,dist=new Uint16Array(n);
+ for(let p=0;p<n;p++)dist[p]=(!mask[p]&&(config.holes||outside[p]))?0:INF;
+ if(config.border){
+  for(let x=0;x<W;x++){dist[x]=Math.min(dist[x],100);dist[(H-1)*W+x]=Math.min(dist[(H-1)*W+x],100)}
+  for(let y=0;y<H;y++){dist[y*W]=Math.min(dist[y*W],100);dist[y*W+W-1]=Math.min(dist[y*W+W-1],100)}
+ }
+ // Eight-neighbor chamfer distance, subpixel-scale integers.
+ for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+  const p=y*W+x;if(!mask[p])continue;let v=dist[p];
+  if(x>0)v=Math.min(v,dist[p-1]+100);
+  if(y>0){v=Math.min(v,dist[p-W]+100);if(x>0)v=Math.min(v,dist[p-W-1]+141);if(x<W-1)v=Math.min(v,dist[p-W+1]+141)}
+  dist[p]=v;
+ }
+ for(let y=H-1;y>=0;y--)for(let x=W-1;x>=0;x--){
+  const p=y*W+x;if(!mask[p])continue;let v=dist[p];
+  if(x<W-1)v=Math.min(v,dist[p+1]+100);
+  if(y<H-1){v=Math.min(v,dist[p+W]+100);if(x>0)v=Math.min(v,dist[p+W-1]+141);if(x<W-1)v=Math.min(v,dist[p+W+1]+141)}
+  dist[p]=v;
+ }
+ send('progress',{percent:39,message:'Contraindo contorno e preservando detalhes...'});
+ const out=new Uint8ClampedArray(source),cutDist=cut*100;
+ let removed=0,kept=0,rgbChanged=0,protectedPixels=0;
+ // Feather remains optional and affects the *new* contour only.
+ const feather=[0,0.55,1.05,1.75][smooth]*100;
+ for(let p=0;p<n;p++){
+  const i=p*4,a=source[i+3];
+  if(!mask[p]){if(a>0)removed++;out[i+3]=0;continue;}
+  const willCut=dist[p]<=cutDist;
+  const fine=willCut&&protectFine&&cut>0&&measureThin(mask,p,cut);
+  if(willCut&&!fine){if(a>0)removed++;out[i+3]=0;continue;}
+  if(fine){out[i+3]=a;protectedPixels++;kept++;continue;}
+  if(feather>0&&dist[p]<cutDist+feather){
+   const t=Math.max(0,Math.min(1,(dist[p]-cutDist)/feather));
+   out[i+3]=Math.max(1,Math.round(a*(t*t*(3-2*t))));
+  }
+  if(out[i+3]>0)kept++;
+ }
+ send('progress',{percent:72,message:'Reconstruindo cores contaminadas nas bordas...'});
+ if(fringe>0){
+  const band=cutDist+(fringe+0.9)*100;
+  const trusted=cutDist+(fringe+1.15)*100;
+  const radius=fringe+4;
+  const baseMix=Math.min(.97,.61+.072*fringe);
+  for(let p=0;p<n;p++){
+   const i=p*4;
+   if(out[i+3]===0||!mask[p]||dist[p]>band)continue;
+   // Do not recolor the thin pixels that were specifically protected.
+   if(protectFine&&dist[p]<=cutDist&&cut>0)continue;
+   const x=p%W,y=(p/W)|0;
+   let best=-1,bestScore=Infinity;
+   // Trace 16 paths inward, rather than searching every pixel in a square.
+   for(const [dx,dy] of DIRS){
+    for(let step=1;step<=radius;step++){
+     const xx=x+dx*step, yy=y+dy*step;
+     if(xx<0||yy<0||xx>=W||yy>=H)break;
+     const q=yy*W+xx,j=q*4;
+     if(out[j+3]<210||dist[q]<trusted)continue;
+     const dd=(dx*step)**2+(dy*step)**2;
+     const dc=(source[i]-source[j])**2+(source[i+1]-source[j+1])**2+(source[i+2]-source[j+2])**2;
+     const score=dd*40+Math.sqrt(dc)*.14+(255-source[j+3])*.3;
+     if(score<bestScore){bestScore=score;best=q}
+     break; // first reliable interior sample on this ray
+    }
+   }
+   if(best<0)continue;
+   const j=best*4;
+   const colorGap=Math.max(Math.abs(source[i]-source[j]),Math.abs(source[i+1]-source[j+1]),Math.abs(source[i+2]-source[j+2]));
+   if(colorGap<=5)continue;
+   const edgeFraction=Math.max(0,Math.min(1,(dist[p]-cutDist)/Math.max(100,fringe*100)));
+   const blend=Math.max(.25,baseMix*(1-.34*edgeFraction));
+   for(let k=0;k<3;k++)out[i+k]=Math.round(source[i+k]*(1-blend)+source[j+k]*blend);
+   if(out[i]!==source[i]||out[i+1]!==source[i+1]||out[i+2]!==source[i+2])rgbChanged++;
+  }
+ }
+ let remainingSolid=0;
+ for(let p=0;p<n;p++)if(out[p*4+3]>0)remainingSolid++;
+ send('processed',{data:out.buffer,width:W,height:H,removed,kept,remainingSolid,rgbChanged,protectedPixels,initialSolid},[out.buffer]);
+}
+onmessage=e=>{try{const m=e.data;if(m.kind==='load'){W=m.width;H=m.height;source=new Uint8ClampedArray(m.pixels);send('loaded')}if(m.kind==='process')process(m.config)}catch(err){send('error',{message:err.message||String(err)})}};
+</script>
+<script>
+(()=>{'use strict';const $=id=>document.getElementById(id),all=q=>Array.from(document.querySelectorAll(q));
+const state={original:null,result:null,w:0,h:0,name:'',file:null,ppu:null,worker:null,busy:false,done:false,mode:'normal',zoom:1,fit:1,compare:50,settingsStale:false,stats:null,exportBlob:null,exportVersion:0};
+let toastTimeout;function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),4000)}
+function pngInfo(buffer){try{const d=new DataView(buffer),u=new Uint8Array(buffer);if(d.getUint32(0)!==0x89504e47)return null;let p=8;while(p+12<=u.length){const len=d.getUint32(p),type=String.fromCharCode(u[p+4],u[p+5],u[p+6],u[p+7]);if(type==='pHYs'&&len===9){let x=d.getUint32(p+8),y=d.getUint32(p+12);return u[p+16]===1?{x,y}:null}p+=len+12;if(type==='IEND')break}}catch(e){}return null}
+function progress(n,msg){$('progressFill').style.width=Math.max(0,Math.min(100,n))+'%';if(msg)$('footStatus').textContent=msg;if(n>=100)setTimeout(()=>$('progressFill').style.width='0',600)}
+function updateBusy(v){state.busy=v;$('processBtn').disabled=v||!state.original;$('downloadBtn').disabled=v||!state.done||state.settingsStale||!state.exportBlob;$('restoreBtn').disabled=v||!state.done;$('fileInput').disabled=v}
+function markStale(){if(!state.done)return;state.exportVersion++;state.exportBlob=null;state.settingsStale=true;$('downloadBtn').disabled=true;$('resultNotice').classList.remove('visible');$('stats').textContent='Parâmetros alterados. Processe novamente para baixar o PNG atualizado.'}
+function setting(name){return $(name)}
+function updateSafetyWarning(){
+ const warning=$('safetyWarning'),cut=+setting('shrink').value,thin=setting('thin').checked;
+ let message='';
+ if(cut>=8)message='⚠ Contração alta ('+cut+' px): confira letras, cabelo e linhas muito finas no Antes/Depois.';
+ else if(cut>=5&&!thin)message='⚠ A contração de '+cut+' px com proteção desativada pode remover detalhes pequenos.';
+ if(message){warning.textContent=message;warning.classList.remove('hidden')}
+ else{warning.textContent='';warning.classList.add('hidden')}
+}
+function getConfig(){return {shrink:+setting('shrink').value,threshold:+setting('threshold').value,smooth:+setting('smooth').value,fringe:+setting('fringe').value,holes:setting('holes').checked,border:setting('border').checked,thin:setting('thin').checked}}
+function updateControls(){const cut=+setting('shrink').value;$('shrinkVal').textContent=cut+' px';$('thresholdVal').textContent=setting('threshold').value;all('.preset').forEach(b=>b.classList.toggle('active',+b.dataset.v===cut));updateSafetyWarning();}
+function makeWorker(){if(state.worker)state.worker.terminate();const blob=new Blob([$('workerCode').textContent],{type:'text/javascript'});const url=URL.createObjectURL(blob);state.worker=new Worker(url);setTimeout(()=>URL.revokeObjectURL(url),3000);state.worker.onmessage=e=>onWorker(e.data);state.worker.onerror=e=>{updateBusy(false);toast('Falha no processamento: '+e.message)}}
+async function loadFile(file){if(state.busy)return;if(!file||(!/\.png$/i.test(file.name||'')&&file.type!=='image/png')){toast('Selecione um arquivo PNG.');return}updateBusy(true);$('fileInfo').classList.remove('hidden');$('uploadTitle').textContent='Abrindo PNG...';try{
+ const raw=await file.arrayBuffer(),ppu=pngInfo(raw),bmp=await createImageBitmap(file);if(bmp.width*bmp.height>25000000){bmp.close();throw Error('Limite de 25 MP nesta versão experimental.')}state.w=bmp.width;state.h=bmp.height;state.name=file.name||'imagem.png';state.file=file;state.ppu=ppu;
+ const c=document.createElement('canvas');c.width=state.w;c.height=state.h;const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(bmp,0,0);bmp.close();state.original=c;state.result=null;state.done=false;state.settingsStale=false;state.stats=null;state.exportVersion++;state.exportBlob=null;
+ const src=$('beforeCanvas');src.width=state.w;src.height=state.h;src.getContext('2d').clearRect(0,0,state.w,state.h);src.getContext('2d').drawImage(c,0,0);const after=$('afterCanvas');after.width=state.w;after.height=state.h;after.getContext('2d').clearRect(0,0,state.w,state.h);
+ $('empty').classList.add('hidden');$('artboard').classList.remove('hidden');$('resultNotice').classList.remove('visible');$('compareMode').disabled=true;$('downloadBtn').disabled=true;$('restoreBtn').disabled=true;
+ $('upload').classList.add('loaded');$('uploadTitle').textContent='Clique para trocar o PNG';$('uploadSubtitle').textContent=state.name;$('uploadSize').textContent=(file.size/1024).toLocaleString('pt-BR',{maximumFractionDigits:0})+' KB';$('uploadSize').classList.remove('hidden');
+ const dpi=ppu?ppu.x*.0254:null;const sizeText=(file.size/1024).toLocaleString('pt-BR',{maximumFractionDigits:0})+' KB';
+ $('fileDimensions').textContent=`▣ ${state.w.toLocaleString('pt-BR')} × ${state.h.toLocaleString('pt-BR')} px`;
+ $('filePhysical').textContent=dpi?`◫ ${(state.w/dpi*2.54).toFixed(1)} × ${(state.h/dpi*2.54).toFixed(1)} cm @ ${dpi.toFixed(0)} dpi`:'◫ DPI não informado';
+ $('fileWeight').textContent='▣ '+sizeText;
+ $('dimensions').textContent=state.w.toLocaleString('pt-BR')+' × '+state.h.toLocaleString('pt-BR')+' px';$('previewDesc').textContent='Imagem original carregada';$('stats').textContent='Arquivo carregado. Escolha os ajustes e processe.';
+ makeWorker();const pixels=ctx.getImageData(0,0,state.w,state.h).data;state.worker.postMessage({kind:'load',pixels:pixels.buffer,width:state.w,height:state.h},[pixels.buffer]);viewNormal();requestAnimationFrame(()=>fit());progress(10,'Analisando PNG...');}
+ catch(e){state.original=null;state.result=null;state.done=false;$('upload').classList.remove('loaded');$('uploadTitle').textContent='Clique para enviar';$('uploadSubtitle').textContent='Arraste, clique ou cole com Ctrl+V';$('uploadSize').classList.add('hidden');$('fileInfo').classList.add('hidden');toast('Falha ao abrir: '+e.message);$('empty').classList.remove('hidden');$('artboard').classList.add('hidden');updateBusy(false)}}
+function onWorker(m){if(m.type==='loaded'){updateBusy(false);progress(100,'PNG carregado. Processamento local pronto.')}else if(m.type==='progress'){progress(m.percent,m.message)}else if(m.type==='processed'){
+ const c=document.createElement('canvas');c.width=m.width;c.height=m.height;c.getContext('2d').putImageData(new ImageData(new Uint8ClampedArray(m.data),m.width,m.height),0,0);state.result=c;state.done=true;state.settingsStale=false;state.stats=m;const a=$('afterCanvas');a.width=m.width;a.height=m.height;a.getContext('2d').drawImage(c,0,0);
+ $('compareMode').disabled=false;$('previewDesc').textContent='Resultado corrigido · contorno contraído';$('stats').innerHTML=`Pixels eliminados: <b>${m.removed.toLocaleString('pt-BR')}</b> · RGB tratados: <b>${m.rgbChanged.toLocaleString('pt-BR')}</b> · Detalhes preservados: <b>${(m.protectedPixels||0).toLocaleString('pt-BR')}</b>`;
+ $('resultNotice').textContent='✓ Processamento concluído. Dimensões preservadas. '+(m.initialSolid>0&&m.removed/m.initialSolid>.35?'⚠ Mais de 35% dos pixels de máscara foram removidos; confira o resultado no comparador.':'Confira letras e linhas finas no comparador.');$('resultNotice').classList.add('visible');updateBusy(false);$('processBtn').textContent='⚡ PROCESSAR NOVAMENTE';viewNormal();progress(100,'Concluído. Preparando PNG para download...');toast('Borda tratada. Confira o resultado antes de imprimir.');prepareDownloadAhead()
+ }else if(m.type==='error'){updateBusy(false);$('processBtn').textContent='⚡ PROCESSAR IMAGEM';toast('Erro no processamento: '+m.message);progress(0,'Não foi possível processar.')}}
+function imgSize(){return {w:Math.max(1,Math.round(state.w*state.zoom)),h:Math.max(1,Math.round(state.h*state.zoom))}}
+function draw(){if(!state.original)return;const size=imgSize(),board=$('artboard');board.style.width=size.w+'px';board.style.height=size.h+'px';$('afterCanvas').style.display=state.done?'block':'none';if(state.mode==='compare'&&state.done){$('beforeCanvas').style.display='block';$('afterCanvas').style.clipPath=`inset(0 0 0 ${state.compare}%)`;$('divider').classList.remove('hidden');$('divider').style.left=state.compare+'%';}else{$('beforeCanvas').style.display=state.done?'none':'block';$('afterCanvas').style.clipPath='none';$('divider').classList.add('hidden')};$('zoomValue').textContent=(state.zoom*100).toFixed(state.zoom<.2?1:0)+'%'}
+function setZoom(v){if(!state.original)return;state.zoom=Math.max(.04,Math.min(5,v));draw()}
+function fit(){if(!state.original)return;const v=$('preview');state.fit=Math.min(1,Math.max(.01,(v.clientWidth-44)/state.w),Math.max(.01,(v.clientHeight-52)/state.h));setZoom(state.fit);v.scrollTop=0;v.scrollLeft=0}
+function viewNormal(){state.mode='normal';$('normalMode').classList.add('active');$('compareMode').classList.remove('active');$('compareFoot').classList.remove('visible');draw()}
+function viewCompare(){if(!state.done)return;state.mode='compare';$('normalMode').classList.remove('active');$('compareMode').classList.add('active');$('compareFoot').classList.add('visible');draw()}
+$('normalMode').onclick=viewNormal;$('compareMode').onclick=viewCompare;$('compareSlider').oninput=()=>{state.compare=+$('compareSlider').value;draw()};$('zoomIn').onclick=()=>setZoom(state.zoom*1.25);$('zoomOut').onclick=()=>setZoom(state.zoom/1.25);$('fitBtn').onclick=fit;
+function setBackground(v){const preview=$('preview');const transparent=v==='check';preview.classList.toggle('solid',!transparent);preview.style.backgroundColor=transparent?'':$('bgColor').value;$('transparentBtn').classList.toggle('active',transparent);$('colorBtn').classList.toggle('active',!transparent);$('transparentBtn').setAttribute('aria-pressed',String(transparent));$('colorBtn').setAttribute('aria-pressed',String(!transparent))}
+$('transparentBtn').onclick=()=>setBackground('check');$('colorBtn').onclick=()=>setBackground('custom');$('bgColor').oninput=()=>setBackground('custom');
+$('shrink').oninput=()=>{updateControls();markStale()};$('threshold').oninput=()=>{updateControls();markStale()};all('.preset').forEach(b=>b.onclick=()=>{$('shrink').value=b.dataset.v;updateControls();markStale()});['smooth','fringe','holes','border','thin'].forEach(id=>$(id).onchange=()=>{markStale();updateSafetyWarning()});updateControls();
+$('processBtn').onclick=()=>{if(!state.original||state.busy)return;state.exportVersion++;state.exportBlob=null;state.settingsStale=true;updateBusy(true);$('processBtn').textContent='⏳ PROCESSANDO...';progress(4,'Processando a arte no navegador...');state.worker.postMessage({kind:'process',config:getConfig()})};
+$('restoreBtn').onclick=()=>{if(state.busy||!state.original)return;state.done=false;state.result=null;state.settingsStale=false;state.stats=null;state.exportVersion++;state.exportBlob=null;$('compareMode').disabled=true;$('downloadBtn').disabled=true;$('restoreBtn').disabled=true;$('processBtn').textContent='⚡ PROCESSAR IMAGEM';$('resultNotice').classList.remove('visible');$('previewDesc').textContent='Imagem original restaurada';$('stats').textContent='Imagem original restaurada. Clique em Processar Imagem.';viewNormal();updateBusy(false)};
+function crc32(buf){let crc=0xffffffff;for(let i=0;i<buf.length;i++){crc^=buf[i];for(let j=0;j<8;j++)crc=(crc>>>1)^((crc&1)?0xedb88320:0)}return(crc^0xffffffff)>>>0}
+function physChunk(p){const c=new Uint8Array(21),d=new DataView(c.buffer);d.setUint32(0,9);c.set([112,72,89,115],4);d.setUint32(8,p.x);d.setUint32(12,p.y);c[16]=1;d.setUint32(17,crc32(c.slice(4,17)));return c}
+async function encodePNG(){
+ const blob=await new Promise((res,rej)=>state.result.toBlob(b=>b?res(b):rej(Error('Falha ao exportar PNG')),'image/png'));
+ const raw=new Uint8Array(await blob.arrayBuffer());if(raw.length<33)throw Error('PNG inválido');
+ const dv=new DataView(raw.buffer),chunks=[];let offset=8,hadPhys=false;
+ while(offset+12<=raw.length){const len=dv.getUint32(offset);if(len>raw.length-offset-12)throw Error('Chunk PNG inválido');
+  const typ=String.fromCharCode(...raw.slice(offset+4,offset+8));if(typ==='pHYs')hadPhys=true;
+  else chunks.push(raw.slice(offset,offset+len+12));offset+=len+12;if(typ==='IEND')break;
+ }
+ if(!chunks.length||String.fromCharCode(...chunks[0].slice(4,8))!=='IHDR')throw Error('PNG sem IHDR');
+ if(!state.ppu&&!hadPhys)return blob;
+ const phys=state.ppu?physChunk(state.ppu):null;
+ let n=8+(phys?phys.length:0)+chunks.reduce((sum,a)=>sum+a.length,0),out=new Uint8Array(n),at=0;
+ out.set(raw.slice(0,8),at);at+=8;out.set(chunks[0],at);at+=chunks[0].length;
+ if(phys){out.set(phys,at);at+=phys.length}
+ for(let k=1;k<chunks.length;k++){out.set(chunks[k],at);at+=chunks[k].length}
+ return new Blob([out],{type:'image/png'});
+}
+// Exportacao antecipada: prepara um PNG real e preserva os metadados de DPI
+// antes de habilitar o botao, mantendo o clique final sincrono.
+function prepareDownloadAhead(){
+ const currentVersion=++state.exportVersion;
+ state.exportBlob=null;
+ const button=$('downloadBtn');button.disabled=true;button.textContent='Preparando PNG...';
+ encodePNG().then(blob=>{
+  if(currentVersion!==state.exportVersion||!state.done||state.settingsStale)return;
+  if(!blob||blob.type!=='image/png'||blob.size<8)throw Error('PNG gerado invalido');
+  state.exportBlob=blob;
+  button.textContent='↓ Baixar PNG';button.disabled=false;
+  progress(100,'PNG pronto. Clique em Baixar PNG para salvar.');
+ }).catch(err=>{
+  if(currentVersion!==state.exportVersion)return;
+  button.textContent='Falha ao preparar PNG';button.disabled=true;
+  toast('Nao foi possivel preparar o PNG: '+err.message);
+ });
+}
+function downloadBlob(blob,filename){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=filename;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),15000);
+}
+function saveCorrectedPNG(blob,filename){
+ // O iframe srcdoc pertence ao mesmo sistema, mas seu Blob vem de outro realm.
+ // Preferir sempre o painel principal, cujo download ja funciona no Eliminador.
+ if(window.parent!==window){
+  let bridge;
+  try{bridge=window.parent.prismaDownloadFromBorder}catch(err){bridge=null}
+  if(typeof bridge==='function'){
+   // Se a chamada falhar, NAO mascarar a falha com toast de sucesso.
+   const result=bridge(blob,filename);
+   if(result!==true)throw Error('O painel nao confirmou o acionamento do download.');
+   return;
+  }
+ }
+ // Fallback apenas quando aberto como HTML isolado.
+ downloadBlob(blob,filename);
+}
+$('downloadBtn').onclick=()=>{
+ // Nao existe mais await dentro do clique: preserva a ativacao do usuario.
+ if(!state.done||state.settingsStale||state.busy)return;
+ if(!state.exportBlob){toast('O PNG ainda esta sendo preparado.');return;}
+ const filename=(state.name||'estampa.png').replace(/\.png$/i,'')+'-borda-corrigida.png';
+ try{
+  saveCorrectedPNG(state.exportBlob,filename);
+  // O navegador decide se salva; nao afirmar que o arquivo ja foi baixado.
+ }catch(err){console.error('Erro no download do PNG',err);toast('O navegador nao conseguiu iniciar a transferencia: '+err.message)}
+};
+$('upload').onclick=()=>$('fileInput').click();$('upload').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('fileInput').click()}};$('fileInput').onchange=e=>{if(e.target.files[0])loadFile(e.target.files[0]);e.target.value=''};
+$('upload').ondragover=e=>{e.preventDefault();$('upload').classList.add('dragging')};$('upload').ondragleave=()=>{$('upload').classList.remove('dragging')};$('upload').ondrop=e=>{e.preventDefault();$('upload').classList.remove('dragging');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0])};
+$('preview').ondragover=e=>e.preventDefault();$('preview').ondrop=e=>{e.preventDefault();if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0])};window.addEventListener('paste',e=>{if(state.busy)return;const item=Array.from(e.clipboardData?.items||[]).find(i=>i.type==='image/png');if(item){const f=item.getAsFile();if(f)loadFile(new File([f],'imagem-colada.png',{type:'image/png'}))}});
+let dividerMoving=false;$('artboard').addEventListener('pointerdown',e=>{if(state.mode!=='compare'||!state.done||e.button!==0)return;dividerMoving=true;$('artboard').setPointerCapture(e.pointerId);updateDivider(e)});$('artboard').addEventListener('pointermove',e=>{if(dividerMoving)updateDivider(e)});['pointerup','pointercancel'].forEach(ev=>$('artboard').addEventListener(ev,()=>dividerMoving=false));function updateDivider(e){const r=$('artboard').getBoundingClientRect();state.compare=Math.max(0,Math.min(100,(e.clientX-r.left)/r.width*100));$('compareSlider').value=state.compare;draw()}
+let panning=false,panOrigin=null;
+$('preview').addEventListener('pointerdown',e=>{if(!state.original||state.mode==='compare'||e.button!==0)return;const v=$('preview');if(v.scrollWidth<=v.clientWidth&&v.scrollHeight<=v.clientHeight)return;panning=true;panOrigin=[e.clientX,e.clientY,v.scrollLeft,v.scrollTop];v.setPointerCapture(e.pointerId);v.classList.add('drag-pan')});
+$('preview').addEventListener('pointermove',e=>{if(!panning)return;const v=$('preview');v.scrollLeft=panOrigin[2]-(e.clientX-panOrigin[0]);v.scrollTop=panOrigin[3]-(e.clientY-panOrigin[1])});
+for(const ev of ['pointerup','pointercancel','lostpointercapture'])$('preview').addEventListener(ev,()=>{panning=false;$('preview').classList.remove('drag-pan')});
+$('preview').addEventListener('wheel',e=>{if(!state.original||!(e.ctrlKey||e.metaKey))return;e.preventDefault();setZoom(state.zoom*(e.deltaY<0?1.14:.88))},{passive:false});window.addEventListener('resize',()=>{if(state.original)fit()});
+})();
+</script>
+</body></html>
